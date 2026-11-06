@@ -4,3 +4,12 @@
 Студент: Поліщук Віктор
 Група: EIP30 Група 2
 """
+import math
+
+#Функція для якої ми шукаємо корінь
+def target_function(x: float):
+    return 2*x**2 - x**4 - 1 - math.log(x)
+
+#Аналітично знайдена похідна для заданої функції
+def derivative_function(x: float):
+    return 4*x - 4*x**3 - 1/x

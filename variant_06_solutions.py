@@ -26,20 +26,18 @@ def solve_newton(f: Callable[[float], float], df: Callable[[float], float], x0: 
         iter_cnt += 1
     return (x[iter_cnt], iter_cnt, x)
 
-#Створює текстовийс файл, записує у нього підсумковий корінь і таблицю ходу ітерацій
+#Створює текстовийс файл, записує у нього знайдений корінь і таблицю ходу ітерацій
 def save_results_to_file(method_function: tuple[float, int, list[float]]) -> None:
     (root, iteretion_num, x_log) = method_function
-    result_file = open('results_variant_06.txt', 'w')
+    with open('results_variant_06.txt', 'w', encoding='utf-8') as result_file:
+        result_file.write(f'Root of the function: {root:.10f}\n')
+        result_file.write('\n\nIteration progress table:\n\n')
+        result_file.write(f'{"Iteration number":<20}{"X value":<20}{"Function value":<20}{"Step value (|xn - xn-1|)"}\n')
+        result_file.write(f'{0:<20}{x_log[0]:<20.10e}{target_function(x_log[0]):.4e}\n')
+        for i in range(1, iteretion_num + 1):
+            result_file.write(f'{i:<20}{x_log[i]:<20.10e}{target_function(x_log[i]):<20.4e}{abs(x_log[i]-x_log[i-1]):.4e}\n')
 
-    result_file.write(f'Root of the function: {root:.10f}\n')
-    result_file.write('\n\nIteration progress table:\n\n')
-    result_file.write(f'{"Iteration number":<20}{"X value":<20}{"Function value":<20}{"Step value (|xn - xn-1|)"}\n')
-    result_file.write(f'{0:<20}{x_log[0]:<20.10e}{target_function(x_log[0]):.4e}\n')
-    for i in range(1, iteretion_num + 1):
-        result_file.write(f'{i:<20}{x_log[i]:<20.10e}{target_function(x_log[i]):<20.4e}{abs(x_log[i]-x_log[i-1]):.4e}\n')
-    
-    result_file.close()
-
+#Дозволяє користувачу ввести вхідні данні для пошуку, виводить результат в консоль та зберігає у файлі
 def main() -> None:
     x0 = float(input('Enter the initial guess x0: '))
     eps = float(input('Enter the root finding tolerance ε: '))
@@ -55,9 +53,9 @@ def main() -> None:
     print(f'Number of iterations: {result[1]}')
     print(f'Iteration history for xi: {list(round(xi, 8) for xi in result[2])}')
 
-    save_results_to_file(solve_newton(target_function, derivative_function, x0, eps))
+    save_results_to_file(result)
     print('-'*30)
-    print('Results and iteration details saved to "results_variant_06.txt')
+    print('Results and iteration details saved to "results_variant_06.txt"')
 
 main()
 

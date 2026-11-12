@@ -23,7 +23,23 @@ def solve_newton(f, df, x0: float, eps: float) -> tuple:
     while abs(x[iter_cnt] - x[iter_cnt - 1]) >= eps:
         x.append(x[iter_cnt] - f(x[iter_cnt])/df(x[iter_cnt]))
         iter_cnt += 1
-
     return (x[iter_cnt], iter_cnt, x)
 
-print(solve_newton(target_function, derivative_function, 7, 0.00008))
+#Створює текстовийс файл, записує у нього підсумковий корінь і таблицю ходу ітерацій
+def save_results_to_file(method_function) -> None:
+    (root, iteretion_num, x_log) = method_function
+    print(root, iteretion_num, x_log)
+    result_file = open('results_variant_06.txt', 'w')
+
+    result_file.write(f'Root of the function: {root:.7f}\n')
+    result_file.write('\n\nIteration progress table:\n\n')
+    result_file.write(f'{"Iteration number":<20}{"X value":<20}{"Function value":<20}{"Step value (|xn - xn-1|)"}\n')
+    result_file.write(f'{0:<20}{x_log[0]:<20.4e}{target_function(x_log[0]):.4e}\n')
+    for i in range(1, iteretion_num + 1):
+        result_file.write(f'{i:<20}{x_log[i]:<20.4e}{target_function(x_log[i]):<20.4e}{abs(x_log[i]-x_log[i-1]):.4e}\n')
+    
+    result_file.close()
+
+
+save_results_to_file(solve_newton(target_function, derivative_function, 100, 0.00008))
+#print(solve_newton(target_function, derivative_function, 7, 0.00008))

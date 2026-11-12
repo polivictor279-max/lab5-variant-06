@@ -40,6 +40,23 @@ def save_results_to_file(method_function) -> None:
     
     result_file.close()
 
+def main():
+    x0 = float(input('Enter the initial guess x0: '))
+    eps = float(input('Enter the root finding tolerance ε: '))
+    print('-'*30)
+    print(f'Input data: x0 = {x0}, ε = {eps}')
+    print('-'*30)
 
-save_results_to_file(solve_newton(target_function, derivative_function, 100, 0.00008))
+    result = solve_newton(target_function, derivative_function, x0, eps)
+    print(f'Root of the function: {result[0]:.7f}')
+    print(f'Iteration number: {result[1]:.7f}')
+    print(f'Iteration history for xi: {result[2]}')
+
+    save_results_to_file(solve_newton(target_function, derivative_function, x0, eps))
+    print('-'*30)
+    print('Results and more detailed iteration information saved to a file results_variant_06.txt')
+
+main()
+
+#save_results_to_file(solve_newton(target_function, derivative_function, 100, 0.00008))
 #print(solve_newton(target_function, derivative_function, 7, 0.00008))

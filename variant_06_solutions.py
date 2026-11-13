@@ -32,10 +32,12 @@ def save_results_to_file(method_function: tuple[float, int, list[float]]) -> Non
     with open('results_variant_06.txt', 'w', encoding='utf-8') as result_file:
         result_file.write(f'Root of the function: {root:.10f}\n')
         result_file.write('\n\nIteration progress table:\n\n')
-        result_file.write(f'{"Iteration number":<20}{"X value":<20}{"Function value":<20}{"Step value (|xn - xn-1|)"}\n')
-        result_file.write(f'{0:<20}{x_log[0]:<20.10e}{target_function(x_log[0]):.4e}\n')
+        result_file.write('*'*99)
+        result_file.write(f'\n{"Iteration number":<20}{"*":<3}{"X value":<20}{"*":<3}{"Function value":<20}{"*":<3}{"Step value (|xn - xn-1|)":>20}{"*":>6}\n')
+        result_file.write(f'{0:<20}{"*":<3}{x_log[0]:<20.10e}{"*":<3}{target_function(x_log[0]):<20.4e}{"*"}{"*":>32}\n')
         for i in range(1, iteretion_num + 1):
-            result_file.write(f'{i:<20}{x_log[i]:<20.10e}{target_function(x_log[i]):<20.4e}{abs(x_log[i]-x_log[i-1]):.4e}\n')
+            result_file.write(f'{i:<20}{"*":<3}{x_log[i]:<20.10e}{"*":<3}{target_function(x_log[i]):<20.4e}{"*":<3}{abs(x_log[i]-x_log[i-1]):.4e}{"*":>20}\n')
+        result_file.write('*'*99)
 
 #Дозволяє користувачу ввести вхідні данні для пошуку, виводить результат в консоль та зберігає у файлі
 def main() -> None:
